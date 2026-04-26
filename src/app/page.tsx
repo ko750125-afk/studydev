@@ -96,19 +96,19 @@ export default function Home() {
         </nav>
 
         {/* Hero Section */}
-        <div className="flex-1 flex flex-col items-center px-6 pt-20 pb-40 relative">
+        <div className="flex-1 flex flex-col items-center px-6 pt-[15vh] pb-40 relative">
           {/* Ambient Glow */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none" />
+          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-indigo-500/[0.08] rounded-full blur-[150px] pointer-events-none" />
 
-          <div className="w-full max-w-4xl space-y-12 relative z-10">
+          <div className="w-full max-w-4xl relative z-10">
             {/* Conditional Rendering: Idle / Success / Error */}
             {state === "idle" || state === "loading" ? (
-              <div className="text-center space-y-8 py-10">
-                <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white animate-fade-in-up">
+              <div className="text-center space-y-16 animate-fade-in-up">
+                <h1 className="text-5xl sm:text-7xl font-black tracking-tight text-white">
                   APP OF DEV STUDY
                 </h1>
                 
-                <div className="w-full max-w-3xl mx-auto pt-6 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+                <div className="w-full max-w-3xl mx-auto">
                   <InputBox onSubmit={handleSubmit} isLoading={state === "loading"} />
                 </div>
               </div>
