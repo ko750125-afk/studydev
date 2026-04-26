@@ -89,33 +89,9 @@ export default function InputBox({ onSubmit, isLoading }: InputBoxProps) {
             </span>
           </div>
 
-          {/* Submit Button */}
-          <button
-            onClick={handleSubmit}
-            disabled={isEmpty || isOverLimit || isLoading}
-            className={`flex items-center gap-2 px-6 py-2.5 rounded-full font-semibold text-sm transition-all duration-300 ${
-              isEmpty || isOverLimit || isLoading
-                ? "bg-white/5 text-slate-500 cursor-not-allowed"
-                : "bg-white text-black hover:bg-slate-200 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
-            }`}
-          >
-            {isLoading ? (
-              <>
-                <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                </svg>
-                <span>처리 중...</span>
-              </>
-            ) : (
-              <>
-                <span>요약 정리</span>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
-                </svg>
-              </>
-            )}
-          </button>
+          <div className="text-[10px] text-slate-700 font-mono tracking-widest uppercase opacity-50">
+            Secure AI Processing
+          </div>
         </div>
 
         {/* Loading Progress Bar Line (Top of the box) */}
@@ -126,6 +102,49 @@ export default function InputBox({ onSubmit, isLoading }: InputBoxProps) {
         )}
       </div>
 
+      {/* Standalone Action Button */}
+      <div className="mt-10 flex justify-center">
+        <button
+          onClick={handleSubmit}
+          disabled={isEmpty || isOverLimit || isLoading}
+          className={`group relative flex items-center gap-3 px-12 py-5 rounded-[24px] font-bold text-lg transition-all duration-500 overflow-hidden ${
+            isEmpty || isOverLimit || isLoading
+              ? "bg-white/5 text-slate-600 cursor-not-allowed border border-white/5"
+              : "bg-white text-black hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(255,255,255,0.1)]"
+          }`}
+        >
+          {/* Shine Effect */}
+          {!isEmpty && !isOverLimit && !isLoading && (
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:animate-[shimmer_2s_infinite] pointer-events-none" />
+          )}
+
+          {isLoading ? (
+            <>
+              <svg className="w-6 h-6 animate-spin" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+              </svg>
+              <span className="tracking-tight">지식 추출 중...</span>
+            </>
+          ) : (
+            <>
+              <span className="relative z-10 tracking-tight">요약 정리 시작</span>
+              <div className="relative z-10 w-8 h-8 rounded-full bg-black/5 flex items-center justify-center group-hover:translate-x-1 transition-transform">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                </svg>
+              </div>
+            </>
+          )}
+        </button>
+      </div>
+
+      {/* Shortcut Info */}
+      <div className="mt-4 text-center">
+        <p className="text-[10px] text-slate-600 uppercase tracking-widest font-semibold opacity-40">
+          Press <span className="bg-white/5 px-1.5 py-0.5 rounded border border-white/10 mx-0.5">Ctrl</span> + <span className="bg-white/5 px-1.5 py-0.5 rounded border border-white/10 mx-0.5">Enter</span> to trigger
+        </p>
+      </div>
     </div>
   );
 }
