@@ -94,13 +94,8 @@ export default function Home() {
             </div>
           </div>
           
-          <div className="flex items-center gap-4 text-sm font-medium text-slate-400">
-            <button className="hover:text-white transition-colors">Documentation</button>
-            <div className="w-px h-4 bg-white/10" />
-            <button className="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all">
-              Sign In
-            </button>
-          </div>
+          {/* Empty div to maintain justify-between if needed, or just remove if only logo is left */}
+          <div />
         </nav>
 
         {/* Hero Section */}

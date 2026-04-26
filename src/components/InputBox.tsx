@@ -60,7 +60,7 @@ export default function InputBox({ onSubmit, isLoading }: InputBoxProps) {
             value={text}
             onChange={(e) => setText(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="무엇이든 내용을 입력하세요..."
+            placeholder=""
             className="w-full min-h-[120px] max-h-[400px] bg-transparent text-slate-100 text-lg sm:text-xl placeholder:text-slate-600 resize-none outline-none leading-relaxed transition-all"
             disabled={isLoading}
           />
