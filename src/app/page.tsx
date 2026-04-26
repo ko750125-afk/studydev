@@ -96,19 +96,19 @@ export default function Home() {
         </nav>
 
         {/* Hero Section */}
-        <div className={`flex-1 flex flex-col items-center px-6 pb-40 relative ${state === "idle" || state === "loading" ? "justify-center min-h-[90vh]" : "pt-20"}`}>
+        <div className={`flex-1 flex flex-col items-center px-6 pb-40 relative ${state === "idle" || state === "loading" ? "justify-center min-h-[95vh]" : "pt-24"}`}>
           {/* Ambient Glow */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-indigo-500/[0.06] rounded-full blur-[150px] pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-indigo-500/[0.05] rounded-full blur-[160px] pointer-events-none" />
 
-          <div className="w-full max-w-4xl relative z-10">
+          <div className="w-full max-w-3xl relative z-10 flex flex-col items-center">
             {/* Conditional Rendering: Idle / Success / Error */}
             {state === "idle" || state === "loading" ? (
-              <div className="text-center space-y-20 animate-fade-in-up">
-                <h1 className="text-4xl sm:text-6xl font-black tracking-tighter text-white">
+              <div className="w-full text-center animate-fade-in-up">
+                <h1 className="text-4xl sm:text-6xl font-black tracking-tighter text-white mb-28">
                   APP OF DEV STUDY
                 </h1>
                 
-                <div className="w-full max-w-3xl mx-auto">
+                <div className="w-full">
                   <InputBox onSubmit={handleSubmit} isLoading={state === "loading"} />
                 </div>
               </div>
