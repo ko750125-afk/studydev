@@ -96,15 +96,15 @@ export default function Home() {
         </nav>
 
         {/* Hero Section */}
-        <div className="flex-1 flex flex-col items-center px-6 pt-[15vh] pb-40 relative">
+        <div className={`flex-1 flex flex-col items-center px-6 pb-40 relative ${state === "idle" || state === "loading" ? "justify-center min-h-[90vh]" : "pt-20"}`}>
           {/* Ambient Glow */}
-          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-indigo-500/[0.08] rounded-full blur-[150px] pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-indigo-500/[0.06] rounded-full blur-[150px] pointer-events-none" />
 
           <div className="w-full max-w-4xl relative z-10">
             {/* Conditional Rendering: Idle / Success / Error */}
             {state === "idle" || state === "loading" ? (
-              <div className="text-center space-y-16 animate-fade-in-up">
-                <h1 className="text-5xl sm:text-7xl font-black tracking-tight text-white">
+              <div className="text-center space-y-24 animate-fade-in-up">
+                <h1 className="text-6xl sm:text-8xl font-black tracking-tighter text-white">
                   APP OF DEV STUDY
                 </h1>
                 
