@@ -168,9 +168,6 @@ export default function Home() {
 
         {/* Footer */}
         <footer className="px-6 py-10 border-t border-white/[0.03] text-center">
-          <p className="text-[10px] text-slate-600 uppercase tracking-[0.2em] font-medium">
-            StudyDev AI Engine v2.0 • Precision Knowledge Extraction
-          </p>
         </footer>
       </div>
     </main>

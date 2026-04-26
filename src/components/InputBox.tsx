@@ -88,10 +88,6 @@ export default function InputBox({ onSubmit, isLoading }: InputBoxProps) {
               {charCount.toLocaleString()} / {MAX_CHARS.toLocaleString()}
             </span>
           </div>
-
-          <div className="text-[10px] text-slate-700 font-mono tracking-widest uppercase opacity-50">
-            Secure AI Processing
-          </div>
         </div>
 
         {/* Loading Progress Bar Line (Top of the box) */}
@@ -137,13 +133,6 @@ export default function InputBox({ onSubmit, isLoading }: InputBoxProps) {
             </>
           )}
         </button>
-      </div>
-
-      {/* Shortcut Info */}
-      <div className="mt-4 text-center">
-        <p className="text-[10px] text-slate-600 uppercase tracking-widest font-semibold opacity-40">
-          Press <span className="bg-white/5 px-1.5 py-0.5 rounded border border-white/10 mx-0.5">Ctrl</span> + <span className="bg-white/5 px-1.5 py-0.5 rounded border border-white/10 mx-0.5">Enter</span> to trigger
-        </p>
       </div>
     </div>
   );
