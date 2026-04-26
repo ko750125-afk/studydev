@@ -38,7 +38,6 @@ export default function InputBox({ onSubmit, isLoading }: InputBoxProps) {
     if (textareaRef.current) textareaRef.current.focus();
   }, []);
 
-  // Auto-resize textarea logic (optional but nice)
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
@@ -47,33 +46,31 @@ export default function InputBox({ onSubmit, isLoading }: InputBoxProps) {
   }, [text]);
 
   return (
-    <div className="w-full max-w-3xl mx-auto">
+    <div className="w-full flex flex-col items-center">
+      {/* Input Container */}
       <div 
-        className={`relative group bg-[#161616] border transition-all duration-500 rounded-[32px] overflow-hidden ${
-          isLoading ? "border-indigo-500/50 shadow-[0_0_30px_rgba(99,102,241,0.2)]" : "border-white/5 hover:border-white/10 shadow-2xl"
+        className={`w-full relative group bg-[#0d0d0d] border transition-all duration-500 rounded-[30px] overflow-hidden ${
+          isLoading ? "border-indigo-500/50 shadow-[0_0_40px_rgba(99,102,241,0.2)]" : "border-white/10 hover:border-white/20 shadow-2xl"
         }`}
       >
-        {/* Input Area */}
-        <div className="p-6 pb-2">
+        <div className="p-8 pb-4">
           <textarea
             ref={textareaRef}
             value={text}
             onChange={(e) => setText(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder=""
-            className="w-full min-h-[120px] max-h-[400px] bg-transparent text-slate-100 text-lg sm:text-xl placeholder:text-slate-600 resize-none outline-none leading-relaxed transition-all"
+            className="w-full min-h-[160px] max-h-[500px] bg-transparent text-white text-xl placeholder:text-slate-700 resize-none outline-none leading-relaxed transition-all"
             disabled={isLoading}
           />
         </div>
 
-        {/* Bottom Utility Bar */}
-        <div className="flex items-center justify-between px-6 py-4 border-t border-white/[0.03] bg-white/[0.01]">
-          <div className="flex items-center gap-2">
-            {/* Action Icons */}
+        <div className="flex items-center justify-between px-8 py-5 border-t border-white/5 bg-white/[0.02]">
+          <div className="flex items-center gap-4">
             <button 
               onClick={handleClear}
               disabled={isEmpty || isLoading}
-              className="p-2.5 rounded-full hover:bg-white/5 text-slate-500 hover:text-slate-300 transition-all disabled:opacity-0"
+              className="p-2 rounded-full hover:bg-white/10 text-slate-500 hover:text-slate-200 transition-all disabled:opacity-0"
               title="Clear text"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -81,50 +78,33 @@ export default function InputBox({ onSubmit, isLoading }: InputBoxProps) {
               </svg>
             </button>
             
-            <div className="w-px h-4 bg-white/5 mx-1" />
+            <div className="w-px h-5 bg-white/10" />
 
-            {/* Char Counter */}
-            <span className={`text-xs font-medium ${isOverLimit ? "text-red-400" : "text-slate-600"}`}>
+            <span className={`text-sm font-medium ${isOverLimit ? "text-red-400" : "text-slate-500"}`}>
               {charCount.toLocaleString()} / {MAX_CHARS.toLocaleString()}
             </span>
           </div>
         </div>
 
-        {/* Loading Progress Bar Line (Top of the box) */}
         {isLoading && (
-          <div className="absolute top-0 left-0 right-0 h-[2px] overflow-hidden">
-            <div className="h-full bg-indigo-500 animate-[shimmer_1.5s_infinite]" style={{ width: '50%' }} />
+          <div className="absolute top-0 left-0 right-0 h-[3px] bg-white/5 overflow-hidden">
+            <div className="h-full bg-indigo-500 animate-[shimmer_2s_infinite]" style={{ width: '40%' }} />
           </div>
         )}
       </div>
 
-      {/* Standalone Action Button */}
-      <div className="mt-28 flex justify-center w-full">
+      {/* Spacing and Premium Button */}
+      <div className="mt-32 w-full flex justify-center">
         <button
           onClick={handleSubmit}
           disabled={isEmpty || isOverLimit || isLoading}
-          className={`group relative flex items-center justify-center px-16 py-4 rounded-full font-bold text-xl transition-all duration-500 border-2 ${
+          className={`px-24 py-5 rounded-full font-bold text-2xl transition-all duration-500 border-2 active:scale-95 ${
             isEmpty || isOverLimit || isLoading
-              ? "bg-white/90 text-black/40 cursor-not-allowed border-white/20 shadow-lg"
-              : "bg-white text-black border-white hover:bg-white hover:scale-105 active:scale-95 shadow-[0_0_40px_rgba(99,102,241,0.4)] hover:shadow-[0_0_60px_rgba(99,102,241,0.6)]"
+              ? "bg-white/10 text-white/20 border-white/5 cursor-not-allowed"
+              : "bg-white text-black border-white shadow-[0_0_50px_rgba(255,255,255,0.2)] hover:shadow-[0_0_80px_rgba(99,102,241,0.5)] hover:scale-105"
           }`}
         >
-          {isLoading ? (
-            <div className="flex items-center gap-4">
-              <svg className="w-6 h-6 animate-spin text-indigo-600" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-              </svg>
-              <span className="tracking-tight text-slate-900">처리 중...</span>
-            </div>
-          ) : (
-            <span className="relative z-10 tracking-tight">요약</span>
-          )}
-          
-          {/* Subtle Outer Bloom for Active State */}
-          {!isEmpty && !isOverLimit && !isLoading && (
-            <div className="absolute inset-0 rounded-full bg-indigo-500/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          )}
+          {isLoading ? "처리 중..." : "요약"}
         </button>
       </div>
     </div>
