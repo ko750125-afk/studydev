@@ -113,21 +113,11 @@ export default function Home() {
             {state === "idle" || state === "loading" ? (
               <div className="text-center space-y-8 py-10">
                 <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white animate-fade-in-up">
-                  지식을 더 가치 있게,<br />
-                  <span className="text-slate-500">대화를 문서로 바꾸세요.</span>
+                  APP OF DEV STUDY
                 </h1>
                 
                 <div className="w-full max-w-3xl mx-auto pt-6 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
                   <InputBox onSubmit={handleSubmit} isLoading={state === "loading"} />
-                </div>
-
-                {/* Suggestions / Tags */}
-                <div className="flex flex-wrap justify-center gap-3 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-                  {["기술 미팅 요약", "코드 리뷰 정리", "학습 가이드 생성", "API 명세 추출"].map((tag) => (
-                    <button key={tag} className="px-4 py-2 rounded-full bg-white/5 border border-white/5 text-xs text-slate-400 hover:border-white/20 hover:text-white transition-all">
-                      {tag}
-                    </button>
-                  ))}
                 </div>
               </div>
             ) : state === "success" && result ? (

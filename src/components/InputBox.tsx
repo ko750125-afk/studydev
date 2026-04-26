@@ -60,7 +60,7 @@ export default function InputBox({ onSubmit, isLoading }: InputBoxProps) {
             value={text}
             onChange={(e) => setText(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="APP OF DEV STUDY"
+            placeholder="무엇이든 내용을 입력하세요..."
             className="w-full min-h-[120px] max-h-[400px] bg-transparent text-slate-100 text-lg sm:text-xl placeholder:text-slate-600 resize-none outline-none leading-relaxed transition-all"
             disabled={isLoading}
           />
@@ -126,15 +126,6 @@ export default function InputBox({ onSubmit, isLoading }: InputBoxProps) {
         )}
       </div>
 
-      {/* Info Tip */}
-      <div className="mt-4 flex items-center justify-center gap-4 text-[10px] text-slate-600 uppercase tracking-widest font-medium">
-        <span className="flex items-center gap-1">
-          <kbd className="px-1.5 py-0.5 rounded border border-white/10 bg-white/5 text-slate-400">Ctrl</kbd>
-          <span className="mx-0.5">+</span>
-          <kbd className="px-1.5 py-0.5 rounded border border-white/10 bg-white/5 text-slate-400">Enter</kbd>
-          <span className="ml-1">to generate</span>
-        </span>
-      </div>
     </div>
   );
 }
