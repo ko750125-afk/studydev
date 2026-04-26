@@ -94,15 +94,13 @@ export default function InputBox({ onSubmit, isLoading }: InputBoxProps) {
       </div>
 
       {/* Spacing and Premium Button */}
-      <div className="mt-32 w-full flex justify-center">
+      <div className="super-spacer" />
+      
+      <div className="flex justify-center w-full pb-20">
         <button
           onClick={handleSubmit}
           disabled={isEmpty || isOverLimit || isLoading}
-          className={`px-24 py-5 rounded-full font-bold text-2xl transition-all duration-500 border-2 active:scale-95 ${
-            isEmpty || isOverLimit || isLoading
-              ? "bg-white/10 text-white/20 border-white/5 cursor-not-allowed"
-              : "bg-white text-black border-white shadow-[0_0_50px_rgba(255,255,255,0.2)] hover:shadow-[0_0_80px_rgba(99,102,241,0.5)] hover:scale-105"
-          }`}
+          className="premium-summary-button px-32 py-6 text-3xl"
         >
           {isLoading ? "처리 중..." : "요약"}
         </button>
