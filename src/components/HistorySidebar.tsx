@@ -81,16 +81,6 @@ export default function HistorySidebar({
         )}
       </div>
 
-      {/* Sidebar Footer */}
-      <div className="p-6 border-t border-white/[0.03]">
-        <div className="flex items-center gap-3 p-3 rounded-2xl bg-white/[0.03] border border-white/[0.05]">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500" />
-          <div className="flex-1 min-w-0">
-            <p className="text-xs font-bold truncate">Premium User</p>
-            <p className="text-[10px] text-slate-500">Free Tier</p>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
