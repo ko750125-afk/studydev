@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 
 interface InputBoxProps {
   onSubmit: (text: string) => void;
@@ -11,9 +11,9 @@ const MAX_CHARS = 15000;
 
 export default function InputBox({ onSubmit, isLoading }: InputBoxProps) {
   const [text, setText] = useState("");
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const charCount = text.length;
-  const charPercentage = (charCount / MAX_CHARS) * 100;
   const isOverLimit = charCount > MAX_CHARS;
   const isEmpty = text.trim().length === 0;
 
@@ -35,135 +35,105 @@ export default function InputBox({ onSubmit, isLoading }: InputBoxProps) {
 
   const handleClear = useCallback(() => {
     setText("");
+    if (textareaRef.current) textareaRef.current.focus();
   }, []);
 
+  // Auto-resize textarea logic (optional but nice)
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = `${Math.max(textareaRef.current.scrollHeight, 120)}px`;
+    }
+  }, [text]);
+
   return (
-    <div className="animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
-      {/* Header */}
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg">
-            <svg
-              className="w-5 h-5 text-white"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-              />
-            </svg>
-          </div>
-          <div>
-            <h2 className="text-lg font-semibold text-white">
-              AI 대화 내용 입력
-            </h2>
-            <p className="text-sm text-slate-400">
-              GPT, Claude 등과 나눈 대화를 붙여넣으세요
-            </p>
-          </div>
-        </div>
-
-        {/* Character Counter */}
-        <div className="flex items-center gap-2">
-          <div
-            className={`counter-badge rounded-full px-3 py-1 text-xs font-medium transition-colors ${
-              isOverLimit ? "!bg-red-500/20 !border-red-500/30 text-red-400" : "text-indigo-300"
-            }`}
-          >
-            {charCount.toLocaleString()} / {MAX_CHARS.toLocaleString()}
-          </div>
-        </div>
-      </div>
-
-      {/* Textarea */}
-      <div className="relative">
-        <textarea
-          id="input-textarea"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder={`여기에 AI와 나눈 대화 내용을 붙여넣으세요...\n\n예시:\n사용자: Next.js의 App Router에 대해 설명해줘\nAI: App Router는 Next.js 13에서 도입된...\n\n💡 Ctrl + Enter로 바로 변환할 수 있습니다.`}
-          className="w-full h-64 bg-black/20 border border-white/10 rounded-2xl p-5 text-slate-200 text-sm leading-relaxed resize-none placeholder:text-slate-500 transition-all duration-300 hover:border-white/20 focus:border-indigo-500/50"
-          disabled={isLoading}
-        />
-
-        {/* Progress Bar */}
-        <div className="absolute bottom-0 left-0 right-0 h-1 rounded-b-2xl overflow-hidden">
-          <div
-            className={`h-full transition-all duration-300 ease-out ${
-              isOverLimit
-                ? "bg-red-500"
-                : charPercentage > 80
-                ? "bg-amber-500"
-                : "bg-gradient-to-r from-indigo-500 to-purple-500"
-            }`}
-            style={{ width: `${Math.min(charPercentage, 100)}%` }}
+    <div className="w-full max-w-3xl mx-auto">
+      <div 
+        className={`relative group bg-[#161616] border transition-all duration-500 rounded-[32px] overflow-hidden ${
+          isLoading ? "border-indigo-500/50 shadow-[0_0_30px_rgba(99,102,241,0.2)]" : "border-white/5 hover:border-white/10 shadow-2xl"
+        }`}
+      >
+        {/* Input Area */}
+        <div className="p-6 pb-2">
+          <textarea
+            ref={textareaRef}
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="APP OF DEV STUDY"
+            className="w-full min-h-[120px] max-h-[400px] bg-transparent text-slate-100 text-lg sm:text-xl placeholder:text-slate-600 resize-none outline-none leading-relaxed transition-all"
+            disabled={isLoading}
           />
         </div>
+
+        {/* Bottom Utility Bar */}
+        <div className="flex items-center justify-between px-6 py-4 border-t border-white/[0.03] bg-white/[0.01]">
+          <div className="flex items-center gap-2">
+            {/* Action Icons */}
+            <button 
+              onClick={handleClear}
+              disabled={isEmpty || isLoading}
+              className="p-2.5 rounded-full hover:bg-white/5 text-slate-500 hover:text-slate-300 transition-all disabled:opacity-0"
+              title="Clear text"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+            </button>
+            
+            <div className="w-px h-4 bg-white/5 mx-1" />
+
+            {/* Char Counter */}
+            <span className={`text-xs font-medium ${isOverLimit ? "text-red-400" : "text-slate-600"}`}>
+              {charCount.toLocaleString()} / {MAX_CHARS.toLocaleString()}
+            </span>
+          </div>
+
+          {/* Submit Button */}
+          <button
+            onClick={handleSubmit}
+            disabled={isEmpty || isOverLimit || isLoading}
+            className={`flex items-center gap-2 px-6 py-2.5 rounded-full font-semibold text-sm transition-all duration-300 ${
+              isEmpty || isOverLimit || isLoading
+                ? "bg-white/5 text-slate-500 cursor-not-allowed"
+                : "bg-white text-black hover:bg-slate-200 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+            }`}
+          >
+            {isLoading ? (
+              <>
+                <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                </svg>
+                <span>처리 중...</span>
+              </>
+            ) : (
+              <>
+                <span>요약 정리</span>
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                </svg>
+              </>
+            )}
+          </button>
+        </div>
+
+        {/* Loading Progress Bar Line (Top of the box) */}
+        {isLoading && (
+          <div className="absolute top-0 left-0 right-0 h-[2px] overflow-hidden">
+            <div className="h-full bg-indigo-500 animate-[shimmer_1.5s_infinite]" style={{ width: '50%' }} />
+          </div>
+        )}
       </div>
 
-      {/* Error Message */}
-      {isOverLimit && (
-        <p className="mt-2 text-sm text-red-400 flex items-center gap-1">
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path
-              fillRule="evenodd"
-              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-              clipRule="evenodd"
-            />
-          </svg>
-          입력 텍스트가 최대 길이를 초과했습니다.
-        </p>
-      )}
-
-      {/* Actions */}
-      <div className="flex items-center justify-between mt-4">
-        <button
-          onClick={handleClear}
-          disabled={isEmpty || isLoading}
-          className="px-4 py-2 text-sm text-slate-400 hover:text-white rounded-xl border border-white/5 hover:border-white/15 transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-white/5"
-        >
-          초기화
-        </button>
-
-        <button
-          id="submit-button"
-          onClick={handleSubmit}
-          disabled={isEmpty || isOverLimit || isLoading}
-          className="btn-primary px-8 py-3 text-sm font-semibold text-white rounded-2xl disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none flex items-center gap-2"
-        >
-          {isLoading ? (
-            <>
-              <div className="loading-dots">
-                <span />
-                <span />
-                <span />
-              </div>
-              분석 중...
-            </>
-          ) : (
-            <>
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M13 10V3L4 14h7v7l9-11h-7z"
-                />
-              </svg>
-              지식 문서 생성
-            </>
-          )}
-        </button>
+      {/* Info Tip */}
+      <div className="mt-4 flex items-center justify-center gap-4 text-[10px] text-slate-600 uppercase tracking-widest font-medium">
+        <span className="flex items-center gap-1">
+          <kbd className="px-1.5 py-0.5 rounded border border-white/10 bg-white/5 text-slate-400">Ctrl</kbd>
+          <span className="mx-0.5">+</span>
+          <kbd className="px-1.5 py-0.5 rounded border border-white/10 bg-white/5 text-slate-400">Enter</kbd>
+          <span className="ml-1">to generate</span>
+        </span>
       </div>
     </div>
   );
