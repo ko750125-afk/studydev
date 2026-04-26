@@ -99,38 +99,31 @@ export default function InputBox({ onSubmit, isLoading }: InputBoxProps) {
       </div>
 
       {/* Standalone Action Button */}
-      <div className="mt-10 flex justify-center">
+      <div className="mt-12 flex justify-center">
         <button
           onClick={handleSubmit}
           disabled={isEmpty || isOverLimit || isLoading}
-          className={`group relative flex items-center gap-3 px-12 py-5 rounded-[24px] font-bold text-lg transition-all duration-500 overflow-hidden ${
+          className={`group relative flex items-center justify-center px-16 py-5 rounded-[22px] font-extrabold text-xl transition-all duration-500 ${
             isEmpty || isOverLimit || isLoading
               ? "bg-white/5 text-slate-600 cursor-not-allowed border border-white/5"
-              : "bg-white text-black hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(255,255,255,0.1)]"
+              : "bg-white text-black hover:scale-105 active:scale-95 shadow-[0_20px_40px_rgba(255,255,255,0.15)] hover:shadow-[0_25px_60px_rgba(255,255,255,0.2)]"
           }`}
         >
-          {/* Shine Effect */}
+          {/* Subtle Inner Glow/Shimmer */}
           {!isEmpty && !isOverLimit && !isLoading && (
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:animate-[shimmer_2s_infinite] pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
           )}
 
           {isLoading ? (
-            <>
-              <svg className="w-6 h-6 animate-spin" fill="none" viewBox="0 0 24 24">
+            <div className="flex items-center gap-3">
+              <svg className="w-6 h-6 animate-spin text-black" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
               </svg>
               <span className="tracking-tight">지식 추출 중...</span>
-            </>
+            </div>
           ) : (
-            <>
-              <span className="relative z-10 tracking-tight">요약 정리 시작</span>
-              <div className="relative z-10 w-8 h-8 rounded-full bg-black/5 flex items-center justify-center group-hover:translate-x-1 transition-transform">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
-                </svg>
-              </div>
-            </>
+            <span className="relative z-10 tracking-tight">요약 정리 시작</span>
           )}
         </button>
       </div>

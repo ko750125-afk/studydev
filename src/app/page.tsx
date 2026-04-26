@@ -103,8 +103,8 @@ export default function Home() {
           <div className="w-full max-w-4xl relative z-10">
             {/* Conditional Rendering: Idle / Success / Error */}
             {state === "idle" || state === "loading" ? (
-              <div className="text-center space-y-24 animate-fade-in-up">
-                <h1 className="text-6xl sm:text-8xl font-black tracking-tighter text-white">
+              <div className="text-center space-y-20 animate-fade-in-up">
+                <h1 className="text-4xl sm:text-6xl font-black tracking-tighter text-white">
                   APP OF DEV STUDY
                 </h1>
                 
