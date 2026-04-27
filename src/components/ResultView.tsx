@@ -21,7 +21,7 @@ export default function ResultView({ markdown }: ResultViewProps) {
       {/* Markdown Result */}
       <div
         id="result-content"
-        className="result-content prose prose-invert max-w-none prose-headings:tracking-tight prose-headings:font-bold prose-p:text-slate-400 prose-strong:text-white prose-pre:bg-[#050505] prose-pre:border prose-pre:border-white/5 prose-pre:rounded-2xl prose-code:text-indigo-400"
+        className="result-content prose max-w-none prose-headings:tracking-tight prose-headings:font-bold prose-p:text-slate-600 prose-strong:text-slate-900 prose-pre:rounded-2xl prose-code:text-blue-600"
         dangerouslySetInnerHTML={{ __html: htmlContent }}
       />
     </div>
